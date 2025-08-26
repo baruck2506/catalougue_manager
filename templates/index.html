@@ -4,20 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Pagina inicial</title>
+    <title>Telinha de Pedidos</title>
 </head>
 <body>
-    <h1>Produtos</h1>
-    <a href="/adicionar">Adicionar Produto</a>
-    <ul>
-        {% for p in produtos %}
-        <li>
-            {{ p.nome }} - R$ {{ "%.2f"|format(p.preco) }}
-            <a href="/editar/{{ p.id }}">Editar</a>
-            <a href="/deletar/{{ p.id }}">Deletar</a>
-        </li>
-        {% endfor %}
-    </ul>
-    
+    <div class="terminal">
+        <div class="terminal-header">
+            <span>system_menu.exe</span>
+            <div class="terminal-controls">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+        </div>
+        
+        <div class="terminal-content">
+            <h1 class="typed-title">system menu&gt;&gt;&gt;</h1>
+            
+            <a href="/adicionar" class="command">add product</a>
+            
+            <ul>
+                {% for p in produtos %}
+                <li>
+                    <div class="product-info">
+                        <span class="success">{{ p.nome }} - R$ {{ "%.2f"|format(p.preco) }}</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="/editar/{{ p.id }}" class="command">edit</a>
+                        <a href="/deletar/{{ p.id }}" class="error">delete</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <div class="footer">
+                <span>{{ produtos|length }} product(s) listed</span>
+                <div class="status-bar">
+                    <div class="status-item">system: online</div>
+                    <div class="status-item">user: admin</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Efeitos interativos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efeito de digitação para o título
+            const title = document.querySelector('.typed-title');
+            const originalText = title.textContent;
+            title.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < originalText.length) {
+                    title.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    title.style.borderRight = 'none';
+                }
+            }
+            
+            // Inicia a animação de digitação
+            setTimeout(typeWriter, 500);
+        });
+    </script>
 </body>
 </html>

@@ -1,64 +1,356 @@
-/* Reset básico */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-}
-
-/* Título */
-h1 {
-    text-align: center;
-    color: #333;
-    margin-top: 20px;
-}
-
-/* Link de adicionar produto */
-a {
-    text-decoration: none;
-    color: white;
-    background-color: #007bff;
-    padding: 8px 15px;
-    border-radius: 5px;
-    margin: 10px;
-    display: inline-block;
-}
-
-a:hover {
-    background-color: #0056b3;
-}
-
-/* Lista de produtos */
-ul {
-    list-style-type: none;
-    padding: 0;
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-/* Item da lista */
-li {
-    background-color: white;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Links de editar e deletar */
-li a {
-    background-color: #28a745; /* verde */
-    padding: 5px 10px;
-    margin-left: 5px;
-}
-
-li a[href*="deletar"] {
-    background-color: #dc3545; /* vermelho */
-}
-
-li a:hover {
-    opacity: 0.8;
-}
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #39FF14; /* verde neon */
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        /* Efeito de scanlines para dar aspecto de monitor antigo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.3;
+        }
+        
+        /* Container principal */
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        /* Terminal estilizado */
+        .terminal {
+            background-color: #111;
+            border: 1px solid #39FF14;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+            padding: 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        /* Barra de título do terminal */
+        .terminal-header {
+            background-color: #39FF14;
+            color: #000;
+            padding: 8px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .terminal-controls {
+            display: flex;
+        }
+        
+        .control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
+        
+        .control.close { background-color: #ff5f56; }
+        .control.minimize { background-color: #ffbd2e; }
+        .control.maximize { background-color: #27c93f; }
+        
+        /* Conteúdo do terminal */
+        .terminal-content {
+            padding: 25px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        /* Título com efeito de digitação */
+        .typed-title {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 0 25px 0;
+            font-size: 1.8em;
+            border-right: 2px solid #39FF14;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        /* Lista de produtos (para a página inicial) */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        li {
+            margin: 12px 0;
+            padding: 8px;
+            border-left: 2px solid #39FF14;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        li:hover {
+            background-color: rgba(57, 255, 20, 0.05);
+            padding-left: 12px;
+        }
+        
+        .product-info {
+            flex-grow: 1;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Formulário estilizado (para a página de adicionar produto) */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #39FF14;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #000;
+            border: 1px solid #39FF14;
+            border-radius: 4px;
+            color: #39FF14;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(57, 255, 20, 0.3);
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+            border-color: #39FF14;
+        }
+        
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder {
+            color: #2a9c0c;
+        }
+        
+        /* Links e botões (comuns a ambas as páginas) */
+        a {
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        a.command {
+            padding: 5px 10px;
+            border: 1px solid #39FF14;
+            border-radius: 3px;
+            color: #39FF14;
+        }
+        
+        a.command:hover {
+            background-color: #39FF14;
+            color: #000;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+        }
+        
+        a.error {
+            color: #ff2e2e;
+            border: 1px solid #ff2e2e;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        
+        a.error:hover {
+            background-color: #ff2e2e;
+            color: #000;
+            box-shadow: 0 0 10px rgba(255, 46, 46, 0.7);
+        }
+        
+        .success {
+            color: #39FF14;
+        }
+        
+        /* Botões (para a página de adicionar produto) */
+        .btn {
+            padding: 12px 25px;
+            background-color: transparent;
+            border: 1px solid #39FF14;
+            border-radius: 4px;
+            color: #39FF14;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+        
+        .btn-primary {
+            background-color: rgba(57, 255, 20, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: #39FF14;
+            color: #000;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.7);
+        }
+        
+        .btn-secondary {
+            border-color: #888;
+            color: #888;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #888;
+            color: #000;
+            box-shadow: 0 0 15px rgba(136, 136, 136, 0.7);
+        }
+        
+        /* Link de voltar */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            border: 1px solid #39FF14;
+            border-radius: 4px;
+            color: #39FF14;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #39FF14;
+            color: #000;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+        }
+        
+        /* Footer do terminal (para a página inicial) */
+        .footer {
+            margin-top: 30px;
+            padding: 10px 0;
+            border-top: 1px dashed #39FF14;
+            font-size: 0.9em;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Status bar (para a página inicial) */
+        .status-bar {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-item::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #39FF14;
+            margin-right: 5px;
+        }
+        
+        /* Mensagens de feedback (para a página de adicionar produto) */
+        .message {
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border-left: 3px solid #39FF14;
+            background-color: rgba(57, 255, 20, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* Grupo de botões (para a página de adicionar produto) */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Animações */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #39FF14; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #39FF14; }
+            to { text-shadow: 0 0 15px #39FF14, 0 0 20px #39FF14; }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .terminal-content {
+                padding: 15px;
+            }
+            
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .product-actions {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+            
+            .footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .status-bar {
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
