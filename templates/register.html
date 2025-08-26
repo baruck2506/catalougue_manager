@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='registerstyle.css') }}">
+    <title>Cadastro - Sistema</title>
+</head>
+<body>
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <span>register.exe</span>
+                <div class="terminal-controls">
+                    <div class="control close"></div>
+                    <div class="control minimize"></div>
+                    <div class="control maximize"></div>
+                </div>
+            </div>
+            
+            <div class="terminal-content">
+                <h1 class="typed-title">Criar Nova Conta&gt;&gt;&gt;</h1>
+                
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" name="nome" placeholder="Nome completo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" name="senha" id="senha" placeholder="Senha" required>
+                        <div class="password-strength">
+                            <div class="strength-meter" id="password-strength-meter"></div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Criar Conta</button>
+                </form>
+                
+                <a href="{{ url_for('login') }}" class="login-link">Já tem uma conta? Fazer Login</a>
+            </div>
+        </div>
+        
+        <!-- Efeito de linha de comando no footer -->
+        <div style="text-align: center; margin-top: 20px;">
+            <span style="color: #39FF14;">system_access&gt; </span>
+            <span class="command-line" style="color: #39FF14;">register --new_user</span>
+        </div>
+    </div>
+
+    <script>
+        // Efeitos interativos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efeito de digitação para o título
+            const title = document.querySelector('.typed-title');
+            const originalText = title.textContent;
+            title.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < originalText.length) {
+                    title.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    title.style.borderRight = 'none';
+                }
+            }
+            
+            // Inicia a animação de digitação
+            setTimeout(typeWriter, 500);
+            
+            // Foca no primeiro campo ao carregar a página
+            document.querySelector('input[type="text"]').focus();
+            
+            // Verificador de força da senha
+            const passwordInput = document.getElementById('senha');
+            const strengthMeter = document.getElementById('password-strength-meter');
+            
+            if (passwordInput && strengthMeter) {
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    let strength = 0;
+                    
+                    // Verifica o comprimento da senha
+                    if (password.length > 5) strength += 25;
+                    if (password.length > 8) strength += 25;
+                    
+                    // Verifica se tem números
+                    if (/\d/.test(password)) strength += 25;
+                    
+                    // Verifica se tem caracteres especiais
+                    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 25;
+                    
+                    // Atualiza o medidor visual
+                    strengthMeter.style.width = strength + '%';
+                    
+                    // Muda a cor baseada na força
+                    if (strength < 50) {
+                        strengthMeter.style.backgroundColor = '#ff2e2e'; // Fraco
+                    } else if (strength < 75) {
+                        strengthMeter.style.backgroundColor = '#ffbd2e'; // Médio
+                    } else {
+                        strengthMeter.style.backgroundColor = '#27c93f'; // Forte
+                    }
+                });
+            }
+            
+            // Adiciona efeito de "digitação" no footer
+            const commandLine = document.querySelector('.command-line');
+            if (commandLine) {
+                const commands = [
+                    'register --new_user',
+                    'system_access --create_account',
+                    'user_add --confirm'
+                ];
+                
+                let currentCommand = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+                
+                function typeCommand() {
+                    const currentText = commands[currentCommand];
+                    
+                    if (isDeleting) {
+                        commandLine.textContent = currentText.substring(0, charIndex - 1);
+                        charIndex--;
+                    } else {
+                        commandLine.textContent = currentText.substring(0, charIndex + 1);
+                        charIndex++;
+                    }
+                    
+                    // Velocidade de digitação
+                    let typeSpeed = isDeleting ? 50 : 100;
+                    
+                    // Se completou a palavra
+                    if (!isDeleting && charIndex === currentText.length) {
+                        typeSpeed = 2000; // Pausa no final
+                        isDeleting = true;
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        currentCommand = (currentCommand + 1) % commands.length;
+                        typeSpeed = 500;
+                    }
+                    
+                    setTimeout(typeCommand, typeSpeed);
+                }
+                
+                // Inicia o efeito de digitação no footer
+                setTimeout(typeCommand, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
