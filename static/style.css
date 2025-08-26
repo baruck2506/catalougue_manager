@@ -1,0 +1,64 @@
+/* Reset básico */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Link de adicionar produto */
+a {
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin: 10px;
+    display: inline-block;
+}
+
+a:hover {
+    background-color: #0056b3;
+}
+
+/* Lista de produtos */
+ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Item da lista */
+li {
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Links de editar e deletar */
+li a {
+    background-color: #28a745; /* verde */
+    padding: 5px 10px;
+    margin-left: 5px;
+}
+
+li a[href*="deletar"] {
+    background-color: #dc3545; /* vermelho */
+}
+
+li a:hover {
+    opacity: 0.8;
+}

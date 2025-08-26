@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Pagina inicial</title>
+</head>
+<body>
+    <h1>Produtos</h1>
+    <a href="/adicionar">Adicionar Produto</a>
+    <ul>
+        {% for p in produtos %}
+        <li>
+            {{ p.nome }} - R$ {{ "%.2f"|format(p.preco) }}
+            <a href="/editar/{{ p.id }}">Editar</a>
+            <a href="/deletar/{{ p.id }}">Deletar</a>
+        </li>
+        {% endfor %}
+    </ul>
+    
+</body>
+</html>
