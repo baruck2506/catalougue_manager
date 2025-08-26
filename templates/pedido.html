@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Fazer Pedido</title>
+</head>
+<body>
+    <h1>Monte seu Pedido</h1>
+    <form method="POST">
+        <label>Seu nome:</label>
+        <input type="text" name="cliente" required><br><br>
+
+        <ul>
+            {% for p in produtos %}
+            <li>
+                {{ p.nome }} - R$ {{ "%.2f"|format(p.preco) }}
+                <input type="number" name="qtd_{{ p.id }}" min="0" value="0">
+            </li>
+            {% endfor %}
+        </ul>
+
+        <button type="submit">Enviar Pedido</button>
+    </form>
+</body>
+</html>

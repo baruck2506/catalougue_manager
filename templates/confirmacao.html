@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Pedido Confirmado</title>
+</head>
+<body>
+    <h1>Pedido Recebido!</h1>
+    <p>Cliente: {{ pedido.cliente_nome }}</p>
+    <h2>Itens:</h2>
+    <ul>
+        {% for item in pedido.itens %}
+        <li>{{ item.produto.nome }} x {{ item.quantidade }}</li>
+        {% endfor %}
+    </ul>
+    <p>Status: {{ pedido.status }}</p>
+</body>
+</html>
