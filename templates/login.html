@@ -1,118 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='login-style.css') }}">
-    <title>Login - Sistema</title>
+    <title>Login</title>
 </head>
 <body>
-    <div class="container">
-        <div class="terminal">
-            <div class="terminal-header">
-                <span>login.exe</span>
-                <div class="terminal-controls">
-                    <div class="control close"></div>
-                    <div class="control minimize"></div>
-                    <div class="control maximize"></div>
-                </div>
-            </div>
-            
-            <div class="terminal-content">
-                <h1 class="typed-title">Acesso ao Sistema&gt;&gt;&gt;</h1>
-                
-                <form method="post">
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="password" name="senha" placeholder="Senha" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Entrar</button>
-                </form>
-                
-                <a href="{{ url_for('register') }}" class="register-link">Não tem conta? Registrar</a>
-            </div>
-        </div>
-        
-        <!-- Efeito de linha de comando no footer -->
-        <div style="text-align: center; margin-top: 20px;">
-            <span style="color: #39FF14;">system_access&gt; </span>
-            <span class="command-line" style="color: #39FF14;">login --user --password</span>
-        </div>
-    </div>
-
-    <script>
-        // Efeitos interativos
-        document.addEventListener('DOMContentLoaded', function() {
-            // Efeito de digitação para o título
-            const title = document.querySelector('.typed-title');
-            const originalText = title.textContent;
-            title.textContent = '';
-            let i = 0;
-            
-            function typeWriter() {
-                if (i < originalText.length) {
-                    title.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 100);
-                } else {
-                    title.style.borderRight = 'none';
-                }
-            }
-            
-            // Inicia a animação de digitação
-            setTimeout(typeWriter, 500);
-            
-            // Foca no primeiro campo ao carregar a página
-            document.querySelector('input[type="email"]').focus();
-            
-            // Adiciona efeito de "digitação" no footer
-            const commandLine = document.querySelector('.command-line');
-            if (commandLine) {
-                const commands = [
-                    'login --user --password',
-                    'system_access --login',
-                    'auth --required'
-                ];
-                
-                let currentCommand = 0;
-                let charIndex = 0;
-                let isDeleting = false;
-                
-                function typeCommand() {
-                    const currentText = commands[currentCommand];
-                    
-                    if (isDeleting) {
-                        commandLine.textContent = currentText.substring(0, charIndex - 1);
-                        charIndex--;
-                    } else {
-                        commandLine.textContent = currentText.substring(0, charIndex + 1);
-                        charIndex++;
-                    }
-                    
-                    // Velocidade de digitação
-                    let typeSpeed = isDeleting ? 50 : 100;
-                    
-                    // Se completou a palavra
-                    if (!isDeleting && charIndex === currentText.length) {
-                        typeSpeed = 2000; // Pausa no final
-                        isDeleting = true;
-                    } else if (isDeleting && charIndex === 0) {
-                        isDeleting = false;
-                        currentCommand = (currentCommand + 1) % commands.length;
-                        typeSpeed = 500;
-                    }
-                    
-                    setTimeout(typeCommand, typeSpeed);
-                }
-                
-                // Inicia o efeito de digitação no footer
-                setTimeout(typeCommand, 2000);
-            }
-        });
-    </script>
+    <form action="{{ url_for('login') }}" method="post">
+        Username: <input type="text" name="username">
+        Userphone: <input type="text" name="userphone">
+        <button type="submit">Login</button>
+    </form>
+    
 </body>
 </html>
